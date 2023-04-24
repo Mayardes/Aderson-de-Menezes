@@ -1,3 +1,4 @@
+using SchoolAdersonDeMenezes.Application;
 
 namespace SchoolAdersonDeMenezes.Api
 {
@@ -13,6 +14,7 @@ namespace SchoolAdersonDeMenezes.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHandlers();
 
             var app = builder.Build();
 
