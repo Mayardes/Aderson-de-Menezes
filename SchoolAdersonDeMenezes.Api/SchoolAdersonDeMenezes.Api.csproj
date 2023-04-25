@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SchoolAdersonDeMenezes.Application\SchoolAdersonDeMenezes.Application.csproj" />
+    <ProjectReference Include="..\SchoolAdersonDeMenezes.Infraestructure\SchoolAdersonDeMenezes.Infraestructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
