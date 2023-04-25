@@ -1,4 +1,6 @@
 using SchoolAdersonDeMenezes.Application;
+using Swashbuckle.AspNetCore.Filters;
+using System.Reflection;
 
 namespace SchoolAdersonDeMenezes.Api
 {
@@ -14,7 +16,12 @@ namespace SchoolAdersonDeMenezes.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddHandlers();
+            //builder.Services.AddHandlers();
+            builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
+            builder.Services.AddSwaggerGen(x =>
+            {
+                x.ExampleFilters();
+            });
 
             var app = builder.Build();
 
