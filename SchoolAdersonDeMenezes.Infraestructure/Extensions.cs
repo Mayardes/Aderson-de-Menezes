@@ -21,14 +21,14 @@ namespace SchoolAdersonDeMenezes.Infraestructure
                 return mongoDoConfiguration;
             });
 
-            services.AddSingleton<IMongoClient>(sp =>
+            services.AddScoped<IMongoClient>(sp =>
             {
                 var options = sp.GetService<MongoDbOptions>();
                 
                 return new MongoClient(options.ConnectionString);
             });
 
-            services.AddSingleton(sp =>
+            services.AddScoped(sp =>
             {
                 var option = sp.GetService<MongoDbOptions>();
                 var mongoOption = sp.GetService<IMongoClient>();
