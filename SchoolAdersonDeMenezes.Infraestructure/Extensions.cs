@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using SchoolAdersonDeMenezes.Domain.Repositories;
 using SchoolAdersonDeMenezes.Infraestructure.Persistence;
@@ -30,6 +31,8 @@ namespace SchoolAdersonDeMenezes.Infraestructure
 
             services.AddScoped(sp =>
             {
+                BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
+
                 var option = sp.GetService<MongoDbOptions>();
                 var mongoOption = sp.GetService<IMongoClient>();
 
