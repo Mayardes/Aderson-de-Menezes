@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SchoolAdersonDeMenezes.Domain\SchoolAdersonDeMenezes.Domain.csproj" />
+    <ProjectReference Include="..\SchoolAdersonDeMenezes.Infraestructure\SchoolAdersonDeMenezes.Infraestructure.csproj" />
   </ItemGroup>
 
 </Project>
