@@ -2,7 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using RabbitMQ.Client;
 using SchoolAdersonDeMenezes.Domain.Repositories;
+using SchoolAdersonDeMenezes.Infraestructure.MessageBus;
 using SchoolAdersonDeMenezes.Infraestructure.Persistence;
 
 namespace SchoolAdersonDeMenezes.Infraestructure
@@ -45,6 +47,22 @@ namespace SchoolAdersonDeMenezes.Infraestructure
         public static IServiceCollection AddRepository(this IServiceCollection services)
         {
             services.AddScoped<ISchoolRepository, SchoolRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddMessageBus(this IServiceCollection services)
+        {
+            var connectionFactory = new ConnectionFactory()
+            {
+                HostName = "localhost"
+            };
+
+            var connection = connectionFactory.CreateConnection("school-service-producer");
+
+            services.AddSingleton(new ProducerConnection(connection));
+
+            services.AddSingleton<IMessageBusClient, RabbitMQClient>();
 
             return services;
         }

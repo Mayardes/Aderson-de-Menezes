@@ -25,6 +25,7 @@ namespace SchoolAdersonDeMenezes.Api
             {
                 x.ExampleFilters();
             });
+            builder.Services.AddMessageBus();
 
             var app = builder.Build();
 
