@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SchoolAdersonDeMenezes.Domain.Entities;
 using SchoolAdersonDeMenezes.Domain.Repositories;
 using SchoolAdersonDeMenezes.Infraestructure.MessageBus;
 
