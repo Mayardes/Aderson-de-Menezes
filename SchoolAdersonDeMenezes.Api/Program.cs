@@ -21,6 +21,8 @@ namespace SchoolAdersonDeMenezes.Api
             builder.Services.AddMongo();
             builder.Services.AddRepository();
             builder.Services.AddConsulConfig();
+            builder.Services.AddNotificationServiceIntegration();
+            builder.Services.AddHttpClient();
             builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
             builder.Services.AddSwaggerGen(x =>
             {

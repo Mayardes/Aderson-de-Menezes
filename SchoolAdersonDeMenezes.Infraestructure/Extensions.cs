@@ -10,6 +10,8 @@ using RabbitMQ.Client;
 using SchoolAdersonDeMenezes.Domain.Repositories;
 using SchoolAdersonDeMenezes.Infraestructure.MessageBus;
 using SchoolAdersonDeMenezes.Infraestructure.Persistence;
+using SchoolAdersonDeMenezes.Infraestructure.ServiceDiscovery;
+using SchoolAdersonDeMenezes.Infraestructure.ServiceIntegration;
 
 namespace SchoolAdersonDeMenezes.Infraestructure
 {
@@ -84,6 +86,8 @@ namespace SchoolAdersonDeMenezes.Infraestructure
 
             }));
 
+            services.AddTransient<IServiceDiscovery, ConsulService>();
+
             return services;
         }
         public static IApplicationBuilder UseConsul(this IApplicationBuilder app)
@@ -111,6 +115,12 @@ namespace SchoolAdersonDeMenezes.Infraestructure
             });
 
             return app;
+        }
+
+        public static IServiceCollection AddNotificationServiceIntegration(this IServiceCollection services)
+        {
+            services.AddScoped<IGetNotificationServiceIntegration, GetNotificationServiceIntegration>();
+            return services;
         }
     }
 }
