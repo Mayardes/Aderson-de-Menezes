@@ -34,7 +34,7 @@ namespace SchoolAdersonDeMenezes.Application
                     sb.Append(c);
                 }
             }
-
+            Console.WriteLine($"ToDashCase :{sb.ToString()}");
             return sb.ToString();
         }
     }
