@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Amazon.Util.Internal.PlatformServices;
+using Consul;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using RabbitMQ.Client;
@@ -67,6 +71,46 @@ namespace SchoolAdersonDeMenezes.Infraestructure
             return services;
         }
 
+        public static IServiceCollection AddConsulConfig(this IServiceCollection services)
+        {
 
+            services.AddSingleton<IConsulClient, ConsulClient>(sp => new ConsulClient(consulConfig =>
+            {
+                var config = sp.GetService<IConfiguration>();
+
+                var address = config.GetValue<string>("Consul:Host");
+
+                consulConfig.Address = new Uri(address);
+
+            }));
+
+            return services;
+        }
+        public static IApplicationBuilder UseConsul(this IApplicationBuilder app)
+        {
+            var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
+            var lifeTime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
+
+            var registration = new AgentServiceRegistration
+            {
+                ID = $"school-service-{Guid.NewGuid()}",
+                Name = "SchoolService",
+                Address = "localhost",
+                Port = 5003
+            };
+
+            consulClient.Agent.ServiceDeregister(registration.ID).ConfigureAwait(true);
+            consulClient.Agent.ServiceRegister(registration).ConfigureAwait(true);
+
+            Console.WriteLine($"Service registed in Consul: {registration.Name}");
+
+            lifeTime.ApplicationStopped.Register(() =>
+            {
+                consulClient.Agent.ServiceDeregister(registration.ID).ConfigureAwait(true);
+                Console.WriteLine($"Service deregisted in Consul: {registration.Name}");
+            });
+
+            return app;
+        }
     }
 }

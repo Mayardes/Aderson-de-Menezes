@@ -20,6 +20,7 @@ namespace SchoolAdersonDeMenezes.Api
             builder.Services.AddHandlers();
             builder.Services.AddMongo();
             builder.Services.AddRepository();
+            builder.Services.AddConsulConfig();
             builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
             builder.Services.AddSwaggerGen(x =>
             {
@@ -40,6 +41,7 @@ namespace SchoolAdersonDeMenezes.Api
 
             app.UseAuthorization();
 
+            app.UseConsul();
 
             app.MapControllers();
 
